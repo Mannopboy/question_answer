@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../static/css/style.css">
+    {% block link %}
+
+    {% endblock %}
+</head>
+<body>
+<div class="menu">
+    <div class="box1">
+
+        <p><a href="{{ url_for("home") }}">Home</a></p>
+
+        {% if user.student %}
+            <p><a href="{{ url_for("question") }}">Question</a></p>
+        {% endif %}
+        {% if user.teacher %}
+            <p><a href="{{ url_for("question_list") }}">Answer</a></p>
+        {% endif %}
+        {% if user.admin %}
+            <p><a href="{{ url_for("settings") }}">Settings</a></p>
+        {% endif %}
+        {% if not user %}
+            <p><a href="{{ url_for("register_user") }}">Register</a></p>
+        {% endif %}
+        {% if user %}
+            <p><a href="{{ url_for("logout") }}">Logout</a></p>
+        {% endif %}
+    </div>
+    {% block body %}
+
+    {% endblock %}
+</div>
+</div>
+</body>
+</html>

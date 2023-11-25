@@ -1,0 +1,31 @@
+{% extends 'index.html' %}
+{% block link %}
+    <link rel="stylesheet" href="../static/css/style4.css">
+    <title>Question</title>
+{% endblock %}
+{% block body %}
+    <div class="box2">
+        <form class="box2__item" action="{{ url_for("change", question_id=question_info.id) }} " method="post">
+            <div class="box2__item__time1">
+                <div class="box2__item__time1__div">
+                    <p>{{ user.username }}</p>
+                </div>
+            </div>
+            <div class="box2__item__time2">
+                <div class="box2__item__time2__div1">
+                    <p>Question</p>
+                    <div class="textarea">
+                        <p>{{ question_info.question_text }}</p>
+                    </div>
+                </div>
+                <div class="box2__item__time2__div3">
+                    <p>Answer</p>
+                    <textarea name="answer" id="" placeholder="Answer:"> </textarea>
+                </div>
+                <div class="box2__item__time2__div2">
+                    <button>Send answer</button>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}

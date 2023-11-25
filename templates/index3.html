@@ -1,0 +1,24 @@
+{% extends 'index.html' %}
+{% block link %}
+    <link rel="stylesheet" href="../static/css/style3.css">
+    <title>Settings</title>
+{% endblock %}
+{% block body %}
+
+    <div class="box2">
+        <div class="box2__item">
+            {% for user in users %}
+                <div class="box2__item__time1">
+                    <div class="box2__item__time1__div1">
+                        <p>User: {{ user.username }}</p>
+                    </div>
+                    <div class="box2__item__time1__div2">
+                        <button {% if user.teacher == True %}style="background-color: #938F8FFF; color: white;" {% endif %}><a href="{{ url_for("add_teacher", user_id=user.id) }}">Teacher</a></button>
+                        <button {% if user.student == True %}style="background-color: #938F8FFF; color: white;" {% endif %}><a href="{{ url_for("add_student", user_id=user.id) }}">Student</a></button>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}

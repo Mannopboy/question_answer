@@ -1,0 +1,52 @@
+{% extends 'index.html' %}
+{% block link %}
+    <link rel="stylesheet" href="../static/css/style5.css">
+    <title>Register</title>
+{% endblock %}
+{% block body %}
+
+    <div class="box2">
+        <div class="box2__item">
+            <div class="box2__item__time1">
+                <div class="box2__item__time1__div1">
+                    <p class="text__1">Sing in</p>
+                </div>
+                <div class="box2__item__time1__div2">
+                    <p class="text__2">Sing up</p>
+                </div>
+            </div>
+            <form action="{{ url_for('login') }}" method="post" class="box2__item__fazer1" enctype="multipart/form-data">
+                <div class="box2__item__time2">
+                    <div class="box2__item__time2__div1">
+                        <p>User name</p>
+                        <input type="text" placeholder="Enter a username" name="user_name">
+                    </div>
+                    <div class="box2__item__time2__div2">
+                        <p>User password</p>
+                        <input type="password" placeholder="Enter the user password" name="user_password">
+                    </div>
+                </div>
+                <div class="box2__item__time3">
+                    <button>Sing in</button>
+                </div>
+            </form>
+            <form action="{{ url_for('register_user') }}" method="post" class="box2__item__fazer2" enctype="multipart/form-data">
+                <div class="box2__item__time2">
+                    <div class="box2__item__time2__div1">
+                        <p>User name</p>
+                        <input type="text" placeholder="Enter a username" name="user_name">
+                    </div>
+                    <div class="box2__item__time2__div2">
+                        <p>User password</p>
+                        <input type="password" placeholder="Enter the user password" name="user_password">
+                    </div>
+                </div>
+                <div class="box2__item__time3">
+                    <button>Sing up</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="../static/javascript/javascript1.js"></script>
+{% endblock %}

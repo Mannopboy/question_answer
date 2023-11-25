@@ -1,0 +1,29 @@
+{% extends 'index.html' %}
+{% block link %}
+    <link rel="stylesheet" href="../static/css/style2.css">
+    <title>Question</title>
+{% endblock %}
+{% block body %}
+    <div class="box2">
+        <form class="box2__item" action="{{ url_for("question") }}" method="post">
+            <div class="box2__item__time1">
+                <p>Add Teacher</p>
+                <select name="teacher_id" id="select">
+                    {% for teacher in teachers %}
+                        <option value="{{ teacher.id }}">{{ teacher.username }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="box2__item__time2">
+                <div class="box2__item__time2__div1">
+                    <p>Enter question</p>
+                    <textarea name="question" id=""></textarea>
+
+                </div>
+                <div class="box2__item__time2__div2">
+                    <button>Send question</button>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}

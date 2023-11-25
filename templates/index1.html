@@ -1,0 +1,28 @@
+{% extends 'index.html' %}
+{% block link %}
+    <link rel="stylesheet" href="../static/css/style1.css">
+    <title>Home</title>
+{% endblock %}
+{% block body %}
+
+    <div class="box2">
+        <div class="box2__item">
+            {% for question in question_list %}
+                <div class="box2__item__time1">
+                    <div class="box2__item__time1__div1">
+                    <div class="box2__item__time1__div1__item1">
+                        <p>User: {{ user.username }}</p>
+                    </div>
+                    <div class="box2__item__time1__div1__item2">
+                        <p>{{ question.question_text }}</p>
+                    </div>
+                </div>
+                    <div class="box2__item__time1__div2">
+    {#                <button>Answer</button>#}
+                </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}

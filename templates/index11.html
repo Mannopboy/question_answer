@@ -1,0 +1,28 @@
+{% extends 'index.html' %}
+{% block link %}
+    <link rel="stylesheet" href="../static/css/style11.css">
+    <title>Know answer</title>
+{% endblock %}
+{% block body %}
+
+    <div class="box2">
+        <div class="box2__item">
+            {% for question in question_list %}
+                <div class="box2__item__time1">
+                    <div class="box2__item__time1__div1">
+                        <div class="box2__item__time1__div1__item1">
+                            <p>{{ user.username }}</p>
+                        </div>
+                        <div class="box2__item__time1__div1__item2">
+                            <p>{{ question.question_text }}</p>
+                        </div>
+                    </div>
+                    <div class="box2__item__time1__div2">
+                        <button><a href="{{ url_for("change", question_id=question.id) }}">Answer</a></button>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}
