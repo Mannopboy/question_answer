@@ -107,6 +107,33 @@ def questions_bot():
     })
 
 
+@app.route('/teachers_bot')
+def teachers_bot():
+    teacher_list = User.query.filter(User.teacher).order_by(User.id).all()
+    teachers = []
+    for teacher in teacher_list:
+        info = {
+            'id': teacher.id,
+            'name': teacher.username
+        }
+        teachers.append(info)
+    return jsonify({
+        'teachers': teachers
+    })
+
+
+@app.route('/send_question_bot', methods=['POST'])
+def send_question_bot():
+    teacher_id = request.get_json().get('teacher_id')
+    question_text = request.get_json().get('question')
+    add = Question(teacher_id=teacher_id, question_text=question_text)
+    db.session.add(add)
+    db.session.commit()
+    return jsonify({
+        'status': True
+    })
+
+
 @app.route('/add_teacher/<int:user_id>')
 def add_teacher(user_id):
     user_info = User.query.filter(User.id == user_id).first()
@@ -163,6 +190,17 @@ def question():
         return redirect(url_for('home'))
 
     return render_template('index2.html', user=user, teachers=teachers)
+
+
+@app.route('/add_question', methods=['POST'])
+def add_question():
+    question_text = request.get_json().get('question_text')
+    teacher_id = request.get_json().get('teacher_id')
+    student_id = request.get_json().get('student_id')
+    add = Question(teacher_id=teacher_id, question_text=question_text, student_id=student_id)
+    db.session.add(add)
+    db.session.commit()
+    return jsonify()
 
 
 @app.route('/settings')
