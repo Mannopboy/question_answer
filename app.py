@@ -82,6 +82,37 @@ def login():
     return render_template('index5.html', user=user)
 
 
+@app.route('/login_bot', methods=['POST'])
+def login_bot():
+    user_name = request.get_json().get('name')
+    telegram_name = request.get_json().get('telegram_name')
+    user_password = request.get_json().get('password')
+    get_user = User.query.filter(User.username == user_name).first()
+    if get_user:
+        checked = check_password_hash(get_user.password, user_password)
+        if checked:
+            get_user.telegram_user_name = telegram_name
+            if get_user.admin:
+                role = 'admin'
+            elif get_user.teacher:
+                role = 'teacher'
+            else:
+                role = 'student'
+            return jsonify({
+                'status': True,
+                'role': role,
+                'id': get_user.id
+            })
+        else:
+            return jsonify({
+                'status': False
+            })
+    else:
+        return jsonify({
+            'status': False
+        })
+
+
 @app.route('/')
 def home():
     user = get_current_user()
@@ -122,11 +153,47 @@ def teachers_bot():
     })
 
 
+@app.route('/student_bot')
+def student_bot():
+    student_list = User.query.filter(User.student).order_by(User.id).all()
+    students = []
+    for student in student_list:
+        info = {
+            'id': student.id,
+            'name': student.username
+        }
+        students.append(info)
+    return jsonify({
+        'students': students
+    })
+
+
+@app.route('/not_answer_questions_bot')
+def not_answer_questions_bot():
+    username = request.get_json().get('username')
+    user = User.query.filter(User.username == username).first()
+    question_list = Question.query.filter(Question.teacher_id == user.id, Question.answer_text == None).order_by(
+        Question.id).all()
+    questions = []
+    for question in question_list:
+        student = User.query.filter(User.id == question.student_id).first()
+        info = {
+            'id': question.id,
+            'question': question.question_text,
+            'student_name': student.username
+        }
+        questions.append(info)
+    return jsonify({
+        'questions': questions
+    })
+
+
 @app.route('/send_question_bot', methods=['POST'])
 def send_question_bot():
     teacher_id = request.get_json().get('teacher_id')
+    student_id = request.get_json().get('student_id')
     question_text = request.get_json().get('question')
-    add = Question(teacher_id=teacher_id, question_text=question_text)
+    add = Question(teacher_id=teacher_id, student_id=student_id, question_text=question_text)
     db.session.add(add)
     db.session.commit()
     return jsonify({
